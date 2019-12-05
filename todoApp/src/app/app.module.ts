@@ -11,7 +11,7 @@ import { HomeModule } from './web/main/home/home.module';
 import { TodoModuleModule } from './web/modules/todo-module/todo-module.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgxUiLoaderModule, NgxUiLoaderConfig } from  'ngx-ui-loader';
-
+import { ToastrModule } from 'ngx-toastr';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   "bgsColor": "red",
@@ -45,7 +45,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     
   ],
   imports: [
-    BrowserModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }), // ToastrModule added
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     AppRoutingModule,
     BrowserAnimationsModule,

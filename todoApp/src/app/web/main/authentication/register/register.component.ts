@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from 'src/app/shared/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private ngxService: NgxUiLoaderService,
+    private toastr: ToastrService,
     private authService: AuthService,
     private lsService: LocalStorageService,
     private router: Router) { }
@@ -79,10 +81,11 @@ export class RegisterComponent implements OnInit {
     // Send request
     this.authService.register(this.user).subscribe(
       (data: any) => {
+        this.toastr.success('Bienvenido', 'Registro completado correctamente');
         this.ngxService.stop();
         this.router.navigateByUrl('/auth/login')
       },
-      err => {console.log(err); this.ngxService.stop();}
+      err => {console.log(err); this.toastr.success('Error', err); this.ngxService.stop();}
     );
   }
 
