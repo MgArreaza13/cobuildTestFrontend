@@ -1,3 +1,4 @@
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LocalStorageService } from './../../../../core/services/local-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -18,6 +19,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private ngxService: NgxUiLoaderService,
     private authService: AuthService,
     private lsService: LocalStorageService,
     private router: Router) { }
@@ -59,9 +61,10 @@ export class RegisterComponent implements OnInit {
   get f() { return this.registerForm.controls; }
 
   onSubmit() {
-    console.log('here')
+    this.ngxService.start();
     this.submitted = true;
     if (this.registerForm.invalid) {
+      this.ngxService.stop();
       return;
     }
 
@@ -76,9 +79,10 @@ export class RegisterComponent implements OnInit {
     // Send request
     this.authService.register(this.user).subscribe(
       (data: any) => {
+        this.ngxService.stop();
         this.router.navigateByUrl('/auth/login')
       },
-      err => console.log(err)
+      err => {console.log(err); this.ngxService.stop();}
     );
   }
 

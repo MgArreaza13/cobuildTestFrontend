@@ -10,7 +10,35 @@ import { AuthenticationModule } from './web/main/authentication/authentication.m
 import { HomeModule } from './web/main/home/home.module';
 import { TodoModuleModule } from './web/modules/todo-module/todo-module.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { NgxUiLoaderModule, NgxUiLoaderConfig } from  'ngx-ui-loader';
 
+
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  "bgsColor": "red",
+  "bgsOpacity": 0.5,
+  "bgsPosition": "bottom-right",
+  "bgsSize": 60,
+  "bgsType": "ball-spin-clockwise",
+  "blur": 5,
+  "fgsColor": "#304064",
+  "fgsPosition": "center-center",
+  "fgsSize": 60,
+  "fgsType": "ball-spin-clockwise",
+  "gap": 24,
+  "logoPosition": "center-center",
+  "logoSize": 120,
+  "logoUrl": "",
+  "masterLoaderId": "master",
+  "overlayBorderRadius": "0",
+  "overlayColor": "rgba(40, 40, 40, 0.8)",
+  "pbColor": "red",
+  "pbDirection": "ltr",
+  "pbThickness": 3,
+  "hasProgressBar": true,
+  "text": "cargando",
+  "textColor": "#FFFFFF",
+  "textPosition": "center-center",
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +46,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
   ],
   imports: [
     BrowserModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     AppRoutingModule,
     BrowserAnimationsModule,
     AuthenticationModule,

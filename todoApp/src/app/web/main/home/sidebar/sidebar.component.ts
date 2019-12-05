@@ -1,3 +1,4 @@
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { LocalStorageService } from './../../../../core/services/local-storage.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -28,6 +29,7 @@ export class SidebarComponent implements OnInit {
   constructor(
     public sidebarservice: SidebarService,
     private authService: AuthService,
+    private ngxService: NgxUiLoaderService,
     private lsService: LocalStorageService,
     private router: Router) {
     this.menus = sidebarservice.getMenuList();
@@ -81,14 +83,17 @@ export class SidebarComponent implements OnInit {
 
 
   logout() {
+    this.ngxService.start();
     this.authService.logout().subscribe(
       (data) => {
         this.lsService.clearStorage();
+        this.ngxService.stop();
         this.router.navigate(['/auth/login']);
       },
       err => {
         if (err.name === 'TokenExpiredError') {
           this.lsService.clearStorage();
+          this.ngxService.stop();
           this.router.navigate(['/auth/login']);
         } else {
           console.log(err);

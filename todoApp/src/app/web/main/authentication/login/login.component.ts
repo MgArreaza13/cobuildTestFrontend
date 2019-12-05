@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private ngxService: NgxUiLoaderService,
     private lsService: LocalStorageService,
     private router: Router) { }
 
@@ -45,11 +47,10 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
-    this.loading = true;
-    console.log('here')
+    this.ngxService.start();
     this.submitted = true;
     if (this.loginForm.invalid) {
-      this.loading = false;
+      this.ngxService.stop();
       return;
     }
 
@@ -66,10 +67,10 @@ export class LoginComponent implements OnInit {
         this.lsService.setValue('first_name', data.first_name);
         this.lsService.setValue('username', data.username);
         this.lsService.setValue('email', data.email);
+        this.ngxService.stop();
         this.router.navigateByUrl('/')
-        this.loading = false;
       },
-      err => console.log(err)
+      err => {console.log(err);this.ngxService.stop(); }
     );
   }
 
