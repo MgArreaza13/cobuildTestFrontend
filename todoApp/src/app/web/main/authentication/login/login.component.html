@@ -8,7 +8,6 @@
             <input type="text" formControlName="username" class="form-control" id="username" placeholder="Enter User">
             <section *ngIf="submitted && f['username'].errors" class="invalid-feedback">
               <section *ngIf="f['username'].errors.required">El campo es requerido</section>
-              <section *ngIf="f['username'].errors.pattern">Debe ser un correo electrónico válido</section>
             </section>
           </div>
           <div class="form-group">
