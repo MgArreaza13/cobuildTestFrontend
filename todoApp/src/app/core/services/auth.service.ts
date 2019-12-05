@@ -1,3 +1,4 @@
+import { User } from './../../shared/models/user';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -9,6 +10,11 @@ export class AuthService {
 
   login(auth: Authentication) {
     return this.http.post(`${ environment.apiRoot }/api/accounts/login/`, auth);
+  }
+
+
+  register(user: User) {
+    return this.http.post(`${ environment.apiRoot }/api/accounts/create/`, user);
   }
 
 
