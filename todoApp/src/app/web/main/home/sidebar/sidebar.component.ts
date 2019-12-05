@@ -5,6 +5,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { SidebarService } from '../../../../core/services/sidebar.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class SidebarComponent implements OnInit {
   constructor(
     public sidebarservice: SidebarService,
     private authService: AuthService,
+    private toastr: ToastrService,
     private ngxService: NgxUiLoaderService,
     private lsService: LocalStorageService,
     private router: Router) {
@@ -87,12 +89,14 @@ export class SidebarComponent implements OnInit {
     this.authService.logout().subscribe(
       (data) => {
         this.lsService.clearStorage();
+        this.toastr.success('Hasta Luego', 'Hemos Cerrado tu sesion satisfactoriamente');
         this.ngxService.stop();
         this.router.navigate(['/auth/login']);
       },
       err => {
         if (err.name === 'TokenExpiredError') {
           this.lsService.clearStorage();
+          this.toastr.success('Hasta Luego', 'Hemos Cerrado tu sesion satisfactoriamente');
           this.ngxService.stop();
           this.router.navigate(['/auth/login']);
         } else {

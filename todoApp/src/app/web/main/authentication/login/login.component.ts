@@ -5,6 +5,7 @@ import { LocalStorageService } from 'src/app/core/services/local-storage.service
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private toastr: ToastrService,
     private ngxService: NgxUiLoaderService,
     private lsService: LocalStorageService,
     private router: Router) { }
@@ -68,9 +70,10 @@ export class LoginComponent implements OnInit {
         this.lsService.setValue('username', data.username);
         this.lsService.setValue('email', data.email);
         this.ngxService.stop();
+        this.toastr.success('Bienvenido', 'login correcto');
         this.router.navigateByUrl('/')
       },
-      err => {console.log(err);this.ngxService.stop(); }
+      err => {console.log(err); this.toastr.error('Error', err);this.ngxService.stop(); }
     );
   }
 
