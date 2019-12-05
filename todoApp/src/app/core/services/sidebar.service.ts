@@ -9,7 +9,7 @@ export class SidebarService {
     title: 'Menú',
     type: 'header'
   }, {
-    title: 'Resumen',
+    title: 'To do',
     icon: 'fab fa-buffer',
     active: false,
     type: 'simple',

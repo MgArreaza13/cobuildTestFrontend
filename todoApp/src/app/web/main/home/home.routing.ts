@@ -5,8 +5,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { IndexComponent } from './index/index.component';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
-const routes: Routes = [
-  { path: '', component: IndexComponent, canActivate: [AuthGuard], }
+const routes: Routes = [{
+  path: '',
+  redirectTo: 'todo',
+  pathMatch: 'full'
+}, {
+  path: 'todo',
+  canActivate: [AuthGuard],
+  component: IndexComponent,
+  loadChildren: '../../modules/todo-module/todo-module.module#TodoModuleModule'
+},
 ];
 
 @NgModule({
