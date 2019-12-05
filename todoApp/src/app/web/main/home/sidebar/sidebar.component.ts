@@ -25,6 +25,7 @@ export class SidebarComponent implements OnInit {
   @Output() public changeVisibility = new EventEmitter<string>();
   public toggleSidebar = 'show';
   menus = [];
+  username;
 
 
   constructor(
@@ -39,7 +40,7 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.username = this.lsService.getValue('username')
   }
 
   toggle(currentMenu: any) {
