@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public auth: Authentication = {};
   public submitted = false;
-
+  public loading = false;
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -45,9 +45,11 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
+    this.loading = true;
     console.log('here')
     this.submitted = true;
     if (this.loginForm.invalid) {
+      this.loading = false;
       return;
     }
 
@@ -65,6 +67,7 @@ export class LoginComponent implements OnInit {
         this.lsService.setValue('username', data.username);
         this.lsService.setValue('email', data.email);
         this.router.navigateByUrl('/')
+        this.loading = false;
       },
       err => console.log(err)
     );
