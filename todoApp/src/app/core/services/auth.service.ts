@@ -16,12 +16,10 @@ export class AuthService {
   register(user: User) {
     return this.http.post(`${ environment.apiRoot }/api/accounts/create/`, user);
   }
-
-
   
-//   logout() {
-//     return this.http.delete(`${ environment.apiRoot }/auth/logout`);
-//   }
+  logout() {
+    return this.http.post(`${ environment.apiRoot }/api/accounts/logout/`, {});
+  }
 
 //   requestChangePassword(auth: Authentication) {
 //     return this.http.post(`${ environment.apiRoot }/auth/request-change-password`, auth);

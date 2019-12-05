@@ -1,7 +1,9 @@
+import { LocalStorageService } from './../../../../core/services/local-storage.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { SidebarService } from '../../../../core/services/sidebar.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 
 @Component({
@@ -25,6 +27,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     public sidebarservice: SidebarService,
+    private authService: AuthService,
+    private lsService: LocalStorageService,
     private router: Router) {
     this.menus = sidebarservice.getMenuList();
 
@@ -75,5 +79,22 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+
+  logout() {
+    this.authService.logout().subscribe(
+      (data) => {
+        this.lsService.clearStorage();
+        this.router.navigate(['/auth/login']);
+      },
+      err => {
+        if (err.name === 'TokenExpiredError') {
+          this.lsService.clearStorage();
+          this.router.navigate(['/auth/login']);
+        } else {
+          console.log(err);
+        }
+      }
+    );
+  }
 
 }

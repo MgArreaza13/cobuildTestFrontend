@@ -6,8 +6,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 // Interceptors
-// import { RequestInterceptor } from './interceptors/request.interceptor';
 // import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { RequestInterceptor } from './interceptors/request.interceptors';
 
 // Guards
 import { AuthGuard } from './guards/auth.guard';
@@ -24,7 +24,7 @@ import { AuthService } from './services/auth.service';
   exports: [
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     AuthGuard,
     AuthService,
