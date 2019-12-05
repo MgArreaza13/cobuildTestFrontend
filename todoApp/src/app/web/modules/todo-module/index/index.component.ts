@@ -1,7 +1,9 @@
+import { Task } from './../../../../shared/models/taks';
 import { TaskService } from './../../../../core/services/task.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-index',
@@ -9,16 +11,65 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-
+  public taskForm: FormGroup;
+  public task: Task = {};
+  public idToTaskUpdate: number;
+  public submitted = false;
+  public isUpdateTask: boolean = false;
+  public isFormActive: boolean = false;
   tasks;
   constructor(
+    private formBuilder: FormBuilder,
     private taskService: TaskService,
     private toastr: ToastrService,
     private ngxService: NgxUiLoaderService,
   ) { }
 
   ngOnInit() {
+    // Build form
+    this.taskForm = this.formBuilder.group({
+      title: ['', [
+        Validators.required,
+      ]],
+      description: ['', [
+        Validators.required,
+      ]],
+    });
     this.get_list_task();
+  }
+
+
+  get f() { return this.taskForm.controls; }
+
+
+  /**
+   * create task from user
+   */
+  onSubmit() {
+    this.ngxService.start();
+    this.submitted = true;
+    if (this.taskForm.invalid) {
+      this.ngxService.stop();
+      return;
+    }
+
+    // Set object
+    this.task.title = this.taskForm.get('title').value;
+    this.task.description = this.taskForm.get('description').value;
+
+    // Send request
+    this.taskService.create(this.task).subscribe(
+      (data: any) => {
+        this.taskForm.setValue({
+          title: '',
+          description: ''
+        })
+        this.isFormActive = false;
+        this.get_list_task();
+        this.ngxService.stop();
+      },
+      err => { console.log(err); this.toastr.error('Error', err); this.ngxService.stop(); }
+    );
   }
 
   /**
@@ -36,6 +87,11 @@ export class IndexComponent implements OnInit {
     );
   }
 
+
+
+  /**
+   * deletetask from user
+   */
   delete(id: number) {
     this.ngxService.start()
     this.taskService.delete(id).subscribe(
@@ -47,7 +103,78 @@ export class IndexComponent implements OnInit {
       error => { console.log(error); this.toastr.success(error); this.ngxService.stop(); }
     );
   }
+
+  /**
+   * setting form update
+   */
+  updateForm(task: Task) {
+    this.isFormActive = true;
+    this.isUpdateTask = true;
+    this.idToTaskUpdate = task.id;
+    this.taskForm.setValue({
+      title: task.title,
+      description: task.description
+    })
+  }
+
+  /**
+   * edit task from user
+  */
+  edit() {
+    this.submitted = true;
+    if (this.taskForm.invalid) {
+      this.ngxService.stop();
+      return;
+    }
+
+    // Set object
+    this.task.title = this.taskForm.get('title').value;
+    this.task.description = this.taskForm.get('description').value;
+
+    // Send request
+    this.taskService.update(this.idToTaskUpdate, this.task).subscribe(
+      (data: any) => {
+        this.taskForm.setValue({
+          title: '',
+          description: ''
+        })
+        this.isFormActive = false;
+        this.get_list_task();
+        this.ngxService.stop();
+      },
+      err => { console.log(err); this.toastr.error('Error', err); this.ngxService.stop(); }
+    );
+  }
+
+
+
+  /**
+   * show form
+   */
+  showForm() {
+    // set value the form in ''
+    this.taskForm.setValue({
+      title: '',
+      description: ''
+    })
+    // show create form
+    this.isFormActive = true;
+
+    // reset edit form
+    this.idToTaskUpdate = 0;
+    this.isUpdateTask = false;
+  }
+
+  /**
+   * hide form
+   */
+  hideForm() {
+    // reset data
+    this.idToTaskUpdate = 0;
+    this.isFormActive = false;
+    this.isUpdateTask = false;
+  }
 }
-  
+
 
 
