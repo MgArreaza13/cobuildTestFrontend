@@ -1,3 +1,4 @@
+import { CoreModule } from 'src/app/core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,7 +23,9 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     AuthenticationModule,
     HomeModule,
     TodoModuleModule,
+    CoreModule,
     AngularFontAwesomeModule
+    TodoModuleModule
   ],
   providers: [SidebarService],
   bootstrap: [AppComponent]

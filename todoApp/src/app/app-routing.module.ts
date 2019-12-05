@@ -2,18 +2,18 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 const routes: Routes = [
-  {
-    path: "",
-    redirectTo: "auth",
-    pathMatch: "full"
-  },
+  // {
+  //   path: "",
+  //   redirectTo: "auth",
+  //   pathMatch: "full"
+  // },
   {
     path: "auth",
     loadChildren:
       "./web/main/authentication/authentication.module#AuthenticationModule"
   },
   {
-    path: "home",
+    path: "",
     loadChildren:
       "./web/main/home/home.module#HomeModule"
   },
