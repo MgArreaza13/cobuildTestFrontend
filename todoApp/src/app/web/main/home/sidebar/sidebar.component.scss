@@ -85,10 +85,8 @@
         padding: 10px 20px;
         display: flex;
         align-items: baseline;
-        background: #396afc;
-        /*background: -webkit-linear-gradient(left, #2948ff, #396afc);
-        background: -o-linear-gradient(left, #2948ff, #396afc);
-        background: linear-gradient(to right, #2948ff, #396afc);*/
+        background: linear-gradient(to right, #93291e, #ed213a);
+
   
         >a {
           text-transform: uppercase;
@@ -115,6 +113,9 @@
         padding-right: 2%;
         overflow: hidden;
         display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
   
         .user-pic {
           float: left;
@@ -419,6 +420,10 @@
           animation: sonar 1.5s infinite;
         }
       }
+      button{
+        background:transparent;
+        color: cornsilk;
+      }
     }
   }
   
@@ -545,7 +550,7 @@
       }
   
       .sidebar-footer {
-        background-color: rgb(217, 231, 244);
+        background-color: #dc35459c;
         box-shadow: 0px -1px 5px rgb(199, 211, 223);
         border-top: 1px solid $img-border-color;
       }
