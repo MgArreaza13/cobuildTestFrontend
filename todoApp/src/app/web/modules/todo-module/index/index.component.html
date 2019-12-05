@@ -1,9 +1,10 @@
 <h1>Lista</h1>
-<ng-container *ngIf="tasks" >
-  <li *ngFor="let task of tasks" >
+<ng-container *ngIf="tasks" style="padding:5em;">
+  <li *ngFor="let task of tasks" style="padding:2em;">
     <span>{{task.title}}</span>
     <p>{{task.description}}</p>
-    <button (click)="delete(task.id)">borrar</button>
+    <button class="btn btn-primary" (click)="updateForm(task)">Editar</button>
+    <button class="btn btn-danger"  (click)="delete(task.id)">borrar</button>
   </li>
 </ng-container>
 
@@ -27,6 +28,7 @@
     <textarea name="" formControlName="description" placeholder="descripcion" id="" cols="30" rows="10"></textarea>
   </div>
 
-  <button type="submit" class="btn btn-primary">crear tarea</button>
-  <button (click)="hideForm()"  class="btn btn-danger">cancelar</button>
+  <button *ngIf="!isUpdateTask"  type="submit" class="btn btn-primary">crear tarea</button>
+  <button *ngIf="isUpdateTask"  type="button" (click)="edit()"  class="btn btn-primary">actualizar tarea</button>
+  <button type="button" (click)="hideForm()"  class="btn btn-danger">cancelar</button>
 </form>

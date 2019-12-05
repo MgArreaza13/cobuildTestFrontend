@@ -13,7 +13,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class IndexComponent implements OnInit {
   public taskForm: FormGroup;
   public task: Task = {};
+  public idToTaskUpdate: number;
   public submitted = false;
+  public isUpdateTask: boolean = false;
   public isFormActive: boolean = false;
   tasks;
   constructor(
@@ -62,6 +64,7 @@ export class IndexComponent implements OnInit {
           title: '',
           description: ''
         })
+        this.isFormActive = false;
         this.get_list_task();
         this.ngxService.stop();
       },
@@ -87,7 +90,7 @@ export class IndexComponent implements OnInit {
 
 
   /**
-   * delete get list tasks from user
+   * deletetask from user
    */
   delete(id: number) {
     this.ngxService.start()
@@ -101,14 +104,75 @@ export class IndexComponent implements OnInit {
     );
   }
 
-
-
-  showForm(){
+  /**
+   * setting form update
+   */
+  updateForm(task: Task) {
     this.isFormActive = true;
+    this.isUpdateTask = true;
+    this.idToTaskUpdate = task.id;
+    this.taskForm.setValue({
+      title: task.title,
+      description: task.description
+    })
   }
 
-  hideForm(){
+  /**
+   * edit task from user
+  */
+  edit() {
+    this.submitted = true;
+    if (this.taskForm.invalid) {
+      this.ngxService.stop();
+      return;
+    }
+
+    // Set object
+    this.task.title = this.taskForm.get('title').value;
+    this.task.description = this.taskForm.get('description').value;
+
+    // Send request
+    this.taskService.update(this.idToTaskUpdate, this.task).subscribe(
+      (data: any) => {
+        this.taskForm.setValue({
+          title: '',
+          description: ''
+        })
+        this.isFormActive = false;
+        this.get_list_task();
+        this.ngxService.stop();
+      },
+      err => { console.log(err); this.toastr.error('Error', err); this.ngxService.stop(); }
+    );
+  }
+
+
+
+  /**
+   * show form
+   */
+  showForm() {
+    // set value the form in ''
+    this.taskForm.setValue({
+      title: '',
+      description: ''
+    })
+    // show create form
+    this.isFormActive = true;
+
+    // reset edit form
+    this.idToTaskUpdate = 0;
+    this.isUpdateTask = false;
+  }
+
+  /**
+   * hide form
+   */
+  hideForm() {
+    // reset data
+    this.idToTaskUpdate = 0;
     this.isFormActive = false;
+    this.isUpdateTask = false;
   }
 }
 

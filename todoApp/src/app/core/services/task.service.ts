@@ -17,12 +17,15 @@ export class TaskService {
     return this.http.post(`${ environment.apiRoot }/api/tasks/new/`, task);
   }
 
+
+  update(id: number, task: Task) {
+    return this.http.put(`${ environment.apiRoot }/api/tasks/edit/${id}/`, task);
+  }
+
   delete(id: number) {
     return this.http.delete(`${ environment.apiRoot }/api/tasks/delete/${id}/`);
   }
   
-//   logout() {
-//     return this.http.post(`${ environment.apiRoot }/api/accounts/logout/`, {});
-//   }
+
 
 }
