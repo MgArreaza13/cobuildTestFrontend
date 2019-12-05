@@ -1,1 +1,12 @@
-<p>index works!</p>
+<h1>Lista</h1>
+<ng-container *ngIf="tasks" >
+  <li *ngFor="let task of tasks" >
+    <span>{{task.title}}</span>
+    <p>{{task.description}}</p>
+    <button (click)="delete(task.id)">borrar</button>
+  </li>
+</ng-container>
+
+<ng-container *ngIf="!tasks" >
+  <p>lista de tareas vacia</p>
+</ng-container>
