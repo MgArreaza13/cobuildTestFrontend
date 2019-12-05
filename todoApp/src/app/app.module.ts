@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AuthenticationModule } from './web/main/authentication/authentication.module';
 import { HomeModule } from './web/main/home/home.module';
 import { TodoModuleModule } from './web/modules/todo-module/todo-module.module';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TodoModuleModule } from './web/modules/todo-module/todo-module.module';
     BrowserAnimationsModule,
     AuthenticationModule,
     HomeModule,
-    TodoModuleModule
+    TodoModuleModule,
+    AngularFontAwesomeModule
   ],
   providers: [SidebarService],
   bootstrap: [AppComponent]
