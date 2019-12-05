@@ -1,0 +1,67 @@
+<nav id="sidebar" class="sidebar" [ngClass]="{'sidebar-bg' : hasBackgroundImage(), 'none':visibility === 'none', 'show':visibility === 'show'}">
+    <section class="sidebar-content">
+
+        <section class="sidebar-header">
+          <a >
+            <span class="text-white">fdfdsf</span>
+          </a>
+          <a class="btn mr-1 mb-1 margin-l-f alice-color" (click)="toggled()"><i class="far fa-window-close"></i></a>
+        </section>
+        <section class="sidebar-profile">
+          <section class="user-pic">
+            <img class="img-responsive img-rounded" src="" alt="User picture">
+          </section>
+          <section class="user-info">
+            <span class="user-name color-g after-slice">54521
+            </span>
+            <span class="user-role after-slice">
+              <span>24154545</span>
+            </span>
+            <span class="user-role">dsdsad</span>
+          </section>
+        </section>
+        <section class="sidebar-search">
+          <section>
+            <section class="input-group">
+              <input type="text" class="form-control search-menu bg-blue" placeholder="Buscar ...">
+              <section class="input-group-append bg-blue">
+                <span class="input-group-text">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+              </section>
+            </section>
+          </section>
+        </section>
+        <section  class="sidebar-menu">
+          <ul>
+            <li *ngFor="let menu of menus" [ngClass]="{'active': menu.active, 'sidebar-dropdown':menu.type === 'dropdown', 'header-menu':menu.type === 'header'}">
+              <span *ngIf="menu.type === 'header'">{{menu.title}}</span>
+              <a *ngIf="menu.type !== 'header'" routerLink="{{menu.url}}">
+                <i class="{{menu.icon}}"></i>
+                <span>{{menu.title}}</span>
+                <span *ngIf="menu.badge" class="badge badge-pill" [ngClass]="menu.badge.class">{{menu.badge.text}}</span>
+              </a>
+              <section *ngIf="menu.type === 'dropdown'" class="sidebar-submenu" [@slide]="getState(menu)">
+                <ul>
+                  <li *ngFor="let submenu of menu.submenus">
+                    <a> {{submenu.title}}
+                      <span *ngIf="submenu.badge" class="badge badge-pill" [ngClass]="submenu.badge.class">{{submenu.badge.text}}</span>
+                    </a>
+                  </li>
+                </ul>
+              </section>
+            </li>
+          </ul>
+        </section>
+
+  
+    </section>
+    <section class="sidebar-footer">
+      <section>
+        <a title="Cerrar sesión">
+          <i class="fas fa-sign-out-alt"></i>
+        </a>
+      </section>
+    </section>
+  </nav>
+  
