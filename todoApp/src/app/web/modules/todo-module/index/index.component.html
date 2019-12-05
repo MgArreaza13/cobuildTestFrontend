@@ -1,34 +1,58 @@
-<h1>Lista</h1>
-<ng-container *ngIf="tasks" style="padding:5em;">
-  <li *ngFor="let task of tasks" style="padding:2em;">
-    <span>{{task.title}}</span>
-    <p>{{task.description}}</p>
-    <button class="btn btn-primary" (click)="updateForm(task)">Editar</button>
-    <button class="btn btn-danger"  (click)="delete(task.id)">borrar</button>
-  </li>
+<h3>To Do List</h3>
+<ng-container *ngIf="tasks">
+  <section class="card">
+    <li *ngFor="let task of tasks">
+      <span>{{task.title}}</span>
+      <p>{{task.description}}</p>
+      <button class="btn btn-primary" (click)="updateForm(task)">Editar</button>
+      <button class="btn btn-danger"  (click)="delete(task.id)">borrar</button>
+    </li>
+  </section>
 </ng-container>
 
 <ng-container *ngIf="!tasks" >
-  <p>lista de tareas vacia</p>
+  <section class="row mt-3 mb-3">
+    <section class="col-12">
+      <section class="card p-3">
+        <i class="fas fa-exclamation-circle font-w"></i>
+        <p class="font-w">Lista de tareas vacia</p>
+      </section>
+    </section>
+  </section>
 </ng-container>
-
-
-
-<button *ngIf="!isFormActive"  class="btn btn-primary btn-block" (click)="showForm()" >Crear Una Tarea</button>
-
-<form *ngIf="isFormActive"  [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-
-  <div class="form-group">
-    <label for="">titulo</label>
-    <input type="text" formControlName="title" placeholder="titulo">
+<section class="sec-add">
+  <p class="mr-2">Añadir Tarea</p>
+  <button type="button" class="btn rounded-circle" (click)="openModal(template)">
+    <i class="fas fa-plus"></i></button>
+</section>
+ 
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Agregar Tarea</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
+  <div class="modal-body">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="inline">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="">Título</label>
+          <input type="text" formControlName="title" placeholder="titulo" class="border-cus">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="">Descripción</label>
+          <textarea class="border-cus" name="" formControlName="description" placeholder="descripcion" id="" cols="" rows="1"></textarea>
+        </div>
+      </div>
 
-  <div class="form-group">
-    <label for="">descripcion</label>
-    <textarea name="" formControlName="description" placeholder="descripcion" id="" cols="30" rows="10"></textarea>
+      <button *ngIf="!isUpdateTask"  type="submit" class="btn btn-primary">Añadir</button>
+      <button type="button" (click)="hideForm()"  class="btn btn-danger">Cancelar</button>
+      <button *ngIf="isUpdateTask"  type="button" (click)="edit()"  class="btn btn-primary">Actualizar Tarea</button>
+    </form>
   </div>
+</ng-template>
 
-  <button *ngIf="!isUpdateTask"  type="submit" class="btn btn-primary">crear tarea</button>
-  <button *ngIf="isUpdateTask"  type="button" (click)="edit()"  class="btn btn-primary">actualizar tarea</button>
-  <button type="button" (click)="hideForm()"  class="btn btn-danger">cancelar</button>
-</form>
+
+<!-- <button *ngIf="!isFormActive"  class="btn btn-primary btn-block" (click)="showForm()" >Crear Una Tarea</button>
+ -->

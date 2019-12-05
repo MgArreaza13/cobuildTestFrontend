@@ -2,6 +2,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TodoRoutingModule } from './todo-module.routing';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 // COMPONENTS
 import { IndexComponent } from './index/index.component';
@@ -12,7 +13,8 @@ import { IndexComponent } from './index/index.component';
   imports: [
     CommonModule,
     SharedModule,
-    TodoRoutingModule
+    TodoRoutingModule,
+    ModalModule.forRoot()
   ]
 })
 export class TodoModuleModule { }

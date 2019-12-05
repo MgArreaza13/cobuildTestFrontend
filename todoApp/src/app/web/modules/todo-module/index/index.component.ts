@@ -1,8 +1,9 @@
 import { Task } from './../../../../shared/models/taks';
 import { TaskService } from './../../../../core/services/task.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -18,11 +19,13 @@ export class IndexComponent implements OnInit {
   public isUpdateTask: boolean = false;
   public isFormActive: boolean = false;
   tasks;
+  modalRef: BsModalRef;
   constructor(
     private formBuilder: FormBuilder,
     private taskService: TaskService,
     private toastr: ToastrService,
     private ngxService: NgxUiLoaderService,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit() {
@@ -173,6 +176,10 @@ export class IndexComponent implements OnInit {
     this.idToTaskUpdate = 0;
     this.isFormActive = false;
     this.isUpdateTask = false;
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 }
 
