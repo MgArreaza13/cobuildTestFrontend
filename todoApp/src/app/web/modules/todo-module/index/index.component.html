@@ -10,3 +10,23 @@
 <ng-container *ngIf="!tasks" >
   <p>lista de tareas vacia</p>
 </ng-container>
+
+
+
+<button *ngIf="!isFormActive"  class="btn btn-primary btn-block" (click)="showForm()" >Crear Una Tarea</button>
+
+<form *ngIf="isFormActive"  [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label for="">titulo</label>
+    <input type="text" formControlName="title" placeholder="titulo">
+  </div>
+
+  <div class="form-group">
+    <label for="">descripcion</label>
+    <textarea name="" formControlName="description" placeholder="descripcion" id="" cols="30" rows="10"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">crear tarea</button>
+  <button (click)="hideForm()"  class="btn btn-danger">cancelar</button>
+</form>
