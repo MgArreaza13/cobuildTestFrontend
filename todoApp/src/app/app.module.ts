@@ -24,7 +24,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     HomeModule,
     TodoModuleModule,
     CoreModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
     TodoModuleModule
   ],
   providers: [SidebarService],
