@@ -1,3 +1,4 @@
+import { CoreModule } from 'src/app/core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +21,7 @@ import { TodoModuleModule } from './web/modules/todo-module/todo-module.module';
     BrowserAnimationsModule,
     AuthenticationModule,
     HomeModule,
+    CoreModule,
     TodoModuleModule
   ],
   providers: [SidebarService],
