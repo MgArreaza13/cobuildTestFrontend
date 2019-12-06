@@ -20,6 +20,7 @@ export class IndexComponent implements OnInit {
   public isFormActive: boolean = false;
   tasks;
   modalRef: BsModalRef;
+  bsModalRef: BsModalRef;
   constructor(
     private formBuilder: FormBuilder,
     private taskService: TaskService,
@@ -37,6 +38,7 @@ export class IndexComponent implements OnInit {
       description: ['', [
         Validators.required,
       ]],
+
     });
     this.get_list_task();
   }
@@ -60,16 +62,19 @@ export class IndexComponent implements OnInit {
     this.task.title = this.taskForm.get('title').value;
     this.task.description = this.taskForm.get('description').value;
 
+
     // Send request
     this.taskService.create(this.task).subscribe(
       (data: any) => {
         this.taskForm.setValue({
           title: '',
-          description: ''
+          description: '',
         })
         this.isFormActive = false;
         this.get_list_task();
         this.ngxService.stop();
+        this.closeModal();
+
       },
       err => { console.log(err); this.toastr.error('Error', err); this.ngxService.stop(); }
     );
@@ -117,7 +122,7 @@ export class IndexComponent implements OnInit {
     this.taskForm.setValue({
       title: task.title,
       description: task.description
-    })
+    });
   }
 
   /**
@@ -144,6 +149,7 @@ export class IndexComponent implements OnInit {
         this.isFormActive = false;
         this.get_list_task();
         this.ngxService.stop();
+        this.closeModal();
       },
       err => { console.log(err); this.toastr.error('Error', err); this.ngxService.stop(); }
     );
@@ -180,6 +186,15 @@ export class IndexComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+  openModalEdit(template: TemplateRef<any>, task) {
+    this.modalRef = this.modalService.show(template);
+    this.updateForm(task);
+
+  }
+
+  closeModal() {
+    this.modalRef.hide()
   }
 }
 

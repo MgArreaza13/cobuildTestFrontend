@@ -11,7 +11,7 @@ const routes: Routes = [{
   pathMatch: 'full'
 }, {
   path: 'todo',
-  //canActivate: [AuthGuard],
+  canActivate: [AuthGuard],
   component: IndexComponent,
   loadChildren: '../../modules/todo-module/todo-module.module#TodoModuleModule'
 },

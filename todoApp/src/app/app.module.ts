@@ -35,7 +35,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   "pbDirection": "ltr",
   "pbThickness": 3,
   "hasProgressBar": true,
-  "text": "cargando",
+  "text": "Cargando",
   "textColor": "#FFFFFF",
   "textPosition": "center-center",
 }

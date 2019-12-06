@@ -1,16 +1,5 @@
-<h3>To Do List</h3>
-<ng-container *ngIf="tasks">
-  <section class="card">
-    <li *ngFor="let task of tasks">
-      <span>{{task.title}}</span>
-      <p>{{task.description}}</p>
-      <button class="btn btn-primary" (click)="updateForm(task)">Editar</button>
-      <button class="btn btn-danger"  (click)="delete(task.id)">borrar</button>
-    </li>
-  </section>
-</ng-container>
-
-<ng-container *ngIf="!tasks" >
+<h3 class="mb-3">To Do List</h3>
+<section *ngIf="tasks.length === 0">
   <section class="row mt-3 mb-3">
     <section class="col-12">
       <section class="card p-3">
@@ -19,36 +8,67 @@
       </section>
     </section>
   </section>
+</section>
+
+<ng-container *ngIf="tasks">
+  <section class="card mb-4">
+    <div class="list-group">
+      <a *ngFor="let task of tasks" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between mb-3">
+          <h5 class="mb-1">{{task.title}}</h5>
+          <small>{{task.created | date}}</small>
+        </div>
+        <section class="d-flex justify-content-between">
+          <p class="mb-1">{{task.description}}</p>
+          <div class="btn-group float-right" dropdown>
+            <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+              aria-controls="dropdown-basic"><i class="fas fa-ellipsis-h"></i>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+              <li role="menuitem"><button class="btn btn-primary dropdown-item"
+                  (click)="openModalEdit(template, task)">Editar</button></li>
+              <li role="menuitem"><button class="btn btn-danger dropdown-item" (click)="delete(task.id)">Borrar</button>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </a>
+    </div>
+  </section>
 </ng-container>
+
 <section class="sec-add">
   <p class="mr-2">Añadir Tarea</p>
   <button type="button" class="btn rounded-circle" (click)="openModal(template)">
     <i class="fas fa-plus"></i></button>
 </section>
- 
+
 <ng-template #template>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Agregar Tarea</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="inline">
       <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="">Título</label>
-          <input type="text" formControlName="title" placeholder="titulo" class="border-cus">
+        <div class="form-group col-md-6 d-flex align-items-baseline">
+          <label for="" class="mr-2">Título</label>
+          <input type="text" formControlName="title" placeholder="" class="border-cus">
         </div>
-        <div class="form-group col-md-6">
-          <label for="">Descripción</label>
-          <textarea class="border-cus" name="" formControlName="description" placeholder="descripcion" id="" cols="" rows="1"></textarea>
+        <div class="form-group col-md-6 d-flex align-items-baseline">
+          <label for="" class="mr-2">Descripción</label>
+          <textarea class="border-cus" name="" formControlName="description" placeholder="" id="" cols=""
+            rows="1"></textarea>
         </div>
       </div>
-
-      <button *ngIf="!isUpdateTask"  type="submit" class="btn btn-primary">Añadir</button>
-      <button type="button" (click)="hideForm()"  class="btn btn-danger">Cancelar</button>
-      <button *ngIf="isUpdateTask"  type="button" (click)="edit()"  class="btn btn-primary">Actualizar Tarea</button>
+      <section class="d-flex justify-content-end">
+        <button *ngIf="!isUpdateTask" type="submit" class="btn btn-primary btn-sm mr-3">Añadir</button>
+        <button *ngIf="isUpdateTask" type="button" (click)="edit()" class="btn btn-primary btn-sm mr-3">Actualizar
+        <button type="button" (click)="hideForm()" class="btn btn-danger btn-sm">Cancelar</button>
+          Tarea</button>
+      </section>
     </form>
   </div>
 </ng-template>

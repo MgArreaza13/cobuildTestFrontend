@@ -20,6 +20,7 @@
     border: none;
     width: 50px;
     height: 50px;
+    color:white
   }
 }
 .border-cus{
@@ -31,4 +32,23 @@
 
 :focus {
     outline: thick double transparent;
+}
+#button-basic{
+  background: brown;
+  width: 30px;
+  height: 30px;
+  font-size: small;
+  padding: 0.1rem;
+  border: none;
+}
+.dropdown-toggle::after {
+  display: none;
+}
+.dropdown-menu.show {
+  display: block;
+  left: auto !important;
+  right: 0 !important;
+  top: 100%;
+  transform: translateY(0px);
+  bottom: auto;
 }
